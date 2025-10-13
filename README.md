@@ -22,6 +22,21 @@
 npm install
 ```
 
+### Настройка среды разработки
+
+1. Прежде чем запустить приложение, необходимо скопировать файл `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+2. Измените `NEXT_PUBLIC_API_URL` в файле `.env` на свой:
+
+```bash
+# в файле .env
+NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1 # укажите ваш API URL
+```
+
 ### Запуск среды разработки
 
 ```bash
