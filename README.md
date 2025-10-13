@@ -1,4 +1,4 @@
-# Next.js + HeroUI + Framer Motion + Tailwind CSS + API Client
+# Next.js + API
 
 Пример использования API в приложении Next.js
 
@@ -41,6 +41,20 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1 # укажите ваш API URL
 
 ```bash
 npm run dev
+```
+
+## Инструкция по сборке и запуску приложения в Docker
+
+### Сборка приложения
+
+```bash
+npm run docker:build
+```
+
+### Запуск приложения
+
+```bash
+npm run docker:run
 ```
 
 ## Инструкция по сборке и запуску приложения в Production
