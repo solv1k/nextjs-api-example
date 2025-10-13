@@ -57,7 +57,7 @@ export default function RootLayout({
                 href={siteConfig.links.github}
                 title="github repository"
               >
-                <span className="text-default-600">View on</span>
+                <span className="text-default-600">Код проекта доступен на</span>
                 <p className="text-primary">GitHub</p>
               </Link>
             </footer>
