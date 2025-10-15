@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import ProfileInline from "@/components/features/profile/inline";
 import { title, subtitle } from "@/components/shared/primitives";
@@ -8,7 +8,8 @@ export default function Home() {
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="text-center">
         <h1 className={title()}>
-          Next.js with <span className={title({ color: "violet" })}>API client</span>
+          Next.js with{" "}
+          <span className={title({ color: "blue" })}>API client</span>
         </h1>
 
         <p className={subtitle()}>

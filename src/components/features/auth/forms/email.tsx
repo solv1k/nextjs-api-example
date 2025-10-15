@@ -3,15 +3,16 @@ import { Alert } from "@heroui/alert";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
+import { useCallback } from "react";
 
 interface EmailFormProps {
-    email: string;
-    errorText: string;
-    isLoading: boolean;
-    onEmailChange: (email: string) => void;
-    onSuccessSubmit: () => void;
-    onError: (message: string) => void;
-    onClose: () => void;
+  email: string;
+  errorText: string;
+  isLoading: boolean;
+  onEmailChange: (email: string) => void;
+  onSuccessSubmit: () => void;
+  onError: (message: string) => void;
+  onClose: () => void;
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,74 +21,79 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Форма ввода Email для входа в аккаунт
  */
 export default function EmailForm({
-    email,
-    errorText,
-    isLoading,
-    onEmailChange,
-    onSuccessSubmit,
-    onError,
-    onClose,
+  email,
+  errorText,
+  isLoading,
+  onEmailChange,
+  onSuccessSubmit,
+  onError,
+  onClose,
 }: EmailFormProps): React.ReactElement {
-    const validateEmail = (email: string): boolean => {
-        if (!email.trim()) {
-            onError("Поле Email не может быть пустым.");
-            return false;
-        }
+  const validateEmail = useCallback(
+    (email: string): boolean => {
+      if (!email.trim()) {
+        onError("Поле Email не может быть пустым.");
 
-        if (!EMAIL_REGEX.test(email)) {
-            onError("Некорректный формат Email.");
-            return false;
-        }
+        return false;
+      }
 
-        return true;
-    };
+      if (!EMAIL_REGEX.test(email)) {
+        onError("Некорректный формат Email.");
 
-    const handleEmailKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
-            handleSubmit();
-        }
-    };
+        return false;
+      }
 
-    const handleSubmit = () => {
-        if (validateEmail(email)) {
-            onSuccessSubmit();
-        }
-    };
+      return true;
+    },
+    [onError],
+  );
 
-    return (
-        <>
-            <ModalHeader className="flex flex-col gap-1">Вход в аккаунт</ModalHeader>
+  const handleSubmit = useCallback(() => {
+    if (validateEmail(email)) {
+      onSuccessSubmit();
+    }
+  }, [email, onSuccessSubmit]);
 
-            <ModalBody>
-                {errorText && <Alert color="warning">{errorText}</Alert>}
+  const handleEmailKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSubmit();
+      }
+    },
+    [handleSubmit],
+  );
 
-                <Input
-                    autoFocus
-                    name="email"
-                    autoComplete="email"
-                    type="email"
-                    placeholder="Введите ваш email"
-                    onChange={(e) => onEmailChange(e.target.value)}
-                    onKeyDown={handleEmailKeyDown}
-                    value={email}
-                    disabled={isLoading}
-                />
-            </ModalBody>
+  return (
+    <>
+      <ModalHeader className="flex flex-col gap-1">Вход в аккаунт</ModalHeader>
 
-            <ModalFooter>
-                <Button
-                    onPress={handleSubmit}
-                    disabled={isLoading}
-                    isLoading={isLoading}
-                    color="primary"
-                    startContent={<EnvelopeIcon className="w-5 h-5" />}
-                >
-                    Получить код
-                </Button>
-                <Button onPress={onClose}>
-                    Закрыть
-                </Button>
-            </ModalFooter>
-        </>
-    );
+      <ModalBody>
+        {errorText && <Alert color="warning">{errorText}</Alert>}
+
+        <Input
+          autoComplete="email"
+          disabled={isLoading}
+          name="email"
+          placeholder="Введите ваш email"
+          type="email"
+          value={email}
+          onChange={(e) => onEmailChange(e.target.value)}
+          onKeyDown={handleEmailKeyDown}
+        />
+      </ModalBody>
+
+      <ModalFooter>
+        <Button
+          color="primary"
+          disabled={isLoading}
+          isLoading={isLoading}
+          startContent={<EnvelopeIcon className="w-5 h-5" />}
+          onPress={handleSubmit}
+        >
+          Получить код
+        </Button>
+        <Button onPress={onClose}>Закрыть</Button>
+      </ModalFooter>
+    </>
+  );
 }

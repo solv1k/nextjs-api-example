@@ -2,7 +2,7 @@
  * Метаданные пагинации
  */
 export interface PaginationMeta {
-    from: number;
-    to: number;
-    total: number;
+  from: number;
+  to: number;
+  total: number;
 }

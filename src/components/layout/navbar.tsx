@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Navbar as HeroUINavbar,
@@ -14,18 +14,16 @@ import { Input } from "@heroui/input";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/shared/theme-switch";
-import {
-  GithubIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/shared/icons";
-import { useState } from "react";
+import { GithubIcon, SearchIcon, Logo } from "@/components/shared/icons";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const searchInput = (
     <Input
@@ -45,9 +43,9 @@ export const Navbar = () => {
 
   return (
     <HeroUINavbar
-      maxWidth="xl"
-      position="sticky"
       isMenuOpen={isMenuOpen}
+      maxWidth="2xl"
+      position="sticky"
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -63,9 +61,14 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:font-bold",
                 )}
                 color="foreground"
+                data-active={
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href)
+                }
                 href={item.href}
               >
                 {item.label}
@@ -102,9 +105,15 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                size="lg"
+                className="data-[active=true]:font-bold data-[active=true]:text-lg"
                 color="foreground"
+                data-active={
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href)
+                }
                 href={item.href}
+                size="lg"
                 onPress={() => setIsMenuOpen(false)}
               >
                 {item.label}
