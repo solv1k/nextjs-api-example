@@ -1,8 +1,6 @@
-import { AvailableFilter, CatalogAdvertType } from "@/types/catalog";
+import { CatalogConfig } from "@/types/catalog";
 
-export type CatalogConfig = typeof catalogConfig;
-
-export const catalogConfig = {
+export const catalogConfig: CatalogConfig = {
   perPage: 20,
   perPageOptions: [20, 40, 60, 80, 100],
   commonFilters: [
@@ -37,7 +35,7 @@ export const catalogConfig = {
         },
       ],
     },
-  ] as AvailableFilter[],
+  ],
   categories: [
     {
       key: "websites",
@@ -254,10 +252,5 @@ export const catalogConfig = {
       types: ["marketplace"],
       filters: [],
     },
-  ] as {
-    key: string;
-    title: string;
-    types: CatalogAdvertType[];
-    filters: AvailableFilter[];
-  }[],
+  ],
 };

@@ -12,8 +12,12 @@ export type FilterKey =
   | "is_ai"
   | "is_profitable"
   | "transfer_days_count"
+  | "website_type"
   | "website_subtype"
-  | "sn_type";
+  | "sn_type"
+  | "sn_category"
+  | "subscribers"
+  | "mp_category";
 export type AvailableSort =
   | "-created_at"
   | "created_at"
@@ -83,3 +87,15 @@ export type AvailableFilter =
   | RangeFilterType
   | MultipleFilterType
   | RadioFilterType;
+
+export type CatalogConfig = {
+  perPage: number;
+  perPageOptions: number[];
+  categories: {
+    key: string;
+    title: string;
+    filters: AvailableFilter[];
+    types: CatalogAdvertType[];
+  }[];
+  commonFilters: AvailableFilter[];
+};
